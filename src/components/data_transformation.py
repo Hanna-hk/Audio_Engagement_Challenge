@@ -48,12 +48,11 @@ class DataTransformation:
 
             target_column_name = "Listening_Time_minutes"
 
-            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
 
             logging.info(f"Applying preprocessing object on train and test dataframe")
 
-            input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessing_obj.transform(test_df)
+            input_feature_train = preprocessing_obj.fit_transform(train_df)
+            input_feature_test = preprocessing_obj.transform(test_df)
 
             logging.info(f"Saved preprocessing object")
 
@@ -63,8 +62,8 @@ class DataTransformation:
             )
 
             return (
-                input_feature_train_arr,
-                input_feature_test_arr,
+                input_feature_train,
+                input_feature_test,
                 self.data_transformation_config.preprocessor_obj_file_path
             )
         except Exception as e:
