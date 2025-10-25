@@ -1,0 +1,71 @@
+import sys
+import os
+from dataclasses import dataclass
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.impute import SimpleImputer
+
+from src.exception import CustomException
+from src.logger import logging
+
+from src.utils import save_object
+from src.components.custom_imputer import CustomImputer
+
+@dataclass
+class DataTransformationConfig:
+    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
+        
+class DataTransformation:
+    def __init__(self):
+        self.data_transformation_config = DataTransformationConfig()
+    
+    def get_data_transformer_obj(self):
+        #This function is responsible for data transformation
+        try:
+            data_pipeline = Pipeline([
+                ('custom_imputer', CustomImputer()),
+            ])
+
+            return data_pipeline
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+    def initiate_data_transformation(self, train_path, test_path):
+        try:
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
+
+            logging.info("Read train and test data completed")
+
+            logging.info("Obtaining preprocessing object")
+
+            preprocessing_obj = self.get_data_transformer_obj()
+
+            target_column_name = "Listening_Time_minutes"
+
+            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
+
+            logging.info(f"Applying preprocessing object on train and test dataframe")
+
+            input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr = preprocessing_obj.transform(test_df)
+
+            logging.info(f"Saved preprocessing object")
+
+            save_object(
+                file_path = self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessing_obj
+            )
+
+            return (
+                input_feature_train_arr,
+                input_feature_test_arr,
+                self.data_transformation_config.preprocessor_obj_file_path
+            )
+        except Exception as e:
+            raise CustomException(e, sys)
