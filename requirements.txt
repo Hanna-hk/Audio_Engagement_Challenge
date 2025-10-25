@@ -5,6 +5,4 @@ matplotlib
 scikit-learn
 scipy
 seaborn
-dill
-Flask
 -e .

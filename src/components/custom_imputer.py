@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import LabelEncoder
-import statistics
 from src.logger import logging
 class CustomImputer(BaseEstimator, TransformerMixin):
     def __init__(self):
