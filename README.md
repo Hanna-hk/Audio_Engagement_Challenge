@@ -14,7 +14,7 @@ Predict how long a listener stays engaged with a specific audio track.
 
 ## Features
 - Data Ingestion - load dataset
-- Data Transformation - preprocessing and feature enggineering
+- Data Transformation - preprocessing and feature engineering
 - Model Training - train and evaluate ML model
 
 ---
