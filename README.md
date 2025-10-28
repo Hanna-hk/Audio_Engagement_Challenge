@@ -1,5 +1,5 @@
 # Audio_Engagement_Challenge
-Predict how long a listener stays engaged with a specific audio track.
+Predict how long a listener stays engaged with a specific audio track based on the episode's characteristics – such as its length, genre, or the popularity of its creators.
 ---
 
 ## Technologies
