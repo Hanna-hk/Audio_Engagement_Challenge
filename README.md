@@ -27,14 +27,17 @@ git clone https://github.com/Hanna-hk/Audio_Engagement_Challenge.git
 cd Audio_Engagement_Challenge
 
 2. Create and activate a virtual environment:
-
+```
 python -m venv venv
 source venv/bin/activate    # Linux/Mac
 venv\Scripts\activate       # Windows
+```
 
 3. Install dependencies:
-
+```
 pip install -r requirements.txt
-
+```
 4. For making predictions in the testing dataset:
+```
 python -m src.components.data_ingestion
+```
